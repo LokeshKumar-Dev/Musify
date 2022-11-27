@@ -1,0 +1,10 @@
+.player {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.player__body {
+  /* display: flex;
+  flex-grow: 1; */
+}

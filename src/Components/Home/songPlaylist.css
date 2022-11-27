@@ -1,0 +1,84 @@
+.album {
+    overflow: unset !important;
+    border-radius: 10px !important;
+    position: relative;
+    margin-right: 25px;
+    background-color: transparent !important;
+}
+
+.album__cover,
+.MuiCardContent-root {
+    position: relative;
+    height: inherit;
+    padding: 0 !important;
+    border-radius: 10px;
+}
+
+.album__play {
+    color: white;
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transition: .5s all !important;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+}
+
+.MuiCardContent-root:hover>.album__play,
+.album:hover>.MuiButtonBase-root>.MuiCardContent-root>.album__play {
+    bottom: 35% !important;
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 1;
+}
+
+.MuiButtonBase-root {
+    height: inherit !important;
+}
+
+.album>button {
+    color: transparent !important;
+}
+
+.title {
+    color: white;
+    font-size: 15px;
+    margin: 5px 0 3px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.subTitle,
+.subTitle>span {
+    color: #ffffff8a;
+    font-size: 10px !important;
+    letter-spacing: 1px;
+    /* CHANGE */
+    /* overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; */
+}
+
+.carousel__pair {
+    display: flex;
+    /* margin-bottom: 10px; */
+    /* justify-content: space-around; */
+}
+
+.css-ohwg9z {
+    margin-bottom: 10px;
+}
+
+.carousel__title {
+    margin: 0 0px 20px;
+    font-size: 16px;
+}
+
+.css-zbwuqm,
+.css-e1mnrr {
+    /*Left Arropw Btn*/
+    height: fit-content !important;
+    top: calc(50% - 50px) !important;
+}
