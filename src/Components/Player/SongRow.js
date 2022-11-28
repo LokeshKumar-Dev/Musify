@@ -44,7 +44,7 @@ export default function SongRow({ i, track, audio, recent = false }) {
       <img className="songRow__album"
         src={
           track.album.image !== null && track.album.image !== undefined ?
-            `http://127.0.0.1:4000/albums/${track.album.image}` :
+            `https://firebasestorage.googleapis.com/v0/b/musify-927d4.appspot.com/o/images%2F${track.album.image}?alt=media` :
             bgImage
         }
         alt="" />

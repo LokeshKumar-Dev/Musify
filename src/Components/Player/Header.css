@@ -28,6 +28,7 @@
 .header__left > input {
   border: none;
   width: 100%;
+  outline: none!important;
 }
 
 .header__right > h4 {

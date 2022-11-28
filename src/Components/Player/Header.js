@@ -15,7 +15,7 @@ function Header() {
       <div className="header__left">
         <SearchIcon />
         <input
-          placeholder="Search for Artists, Songs, or Podcasts "
+          placeholder="Search for Artists, Songs, or Playlist "
           type="text"
         />
       </div>
@@ -27,7 +27,7 @@ function Header() {
               <h4>{user?.name}</h4>
             </> :
             <>
-              <Button onClick={() => {}} href="/login" variant="outlined" size="small" style={{color: lightBlue[50], borderColor: lightBlue[50]}}>SignIn</Button>
+              <Button onClick={() => {}} href="/login" variant="contained" size="small" style={{fontWeight: '600', borderColor: lightBlue[50]}}>SignIn</Button>
               {/* <Button onClick={() => {}} href="/login" variant="contained" size="small" style={{color: lightBlue[50],backgroundColor: lightBlue[800]}}>SignUp</Button> */}
             </>
         }

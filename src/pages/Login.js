@@ -7,6 +7,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 
 import './Login.css'
 
@@ -56,7 +57,7 @@ export default function Login() {
 
   return (
     <section className='login_body'>
-      <Box className='login_form' sx={{ width: '100%' }}>
+      <Paper elevation={3}  className='login_form' sx={{ width: '80%', borderRadius: '15px' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" className='tabs'>
             <Tab className='tab' label="Sign In" {...a11yProps(0)} />
@@ -69,7 +70,7 @@ export default function Login() {
         <TabPanel value={value} index={1}>
           <SignUpForm/>
         </TabPanel>
-      </Box>
+      </Paper>
     </section>
   );
 }

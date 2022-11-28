@@ -71,7 +71,7 @@ function Body() {
       <div className="body__info">
         <img src={
           selectedPlaylist?.image !== null ?
-            `http://127.0.0.1:4000/albums/${selectedPlaylist.image}` :
+            `https://firebasestorage.googleapis.com/v0/b/musify-927d4.appspot.com/o/images%2F${selectedPlaylist.image}?alt=media` :
             bgImage
         } alt="" />
 

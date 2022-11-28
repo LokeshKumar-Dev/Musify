@@ -19,7 +19,7 @@ import Box from '@mui/material/Box';
 export default function Home() {
     const [{ playlists, selectedPlaylist, open }, dispatch] = useStateValue();
 
-    const handleClickOpen = async(id, name) => {
+    const handleClickOpen = async (id, name) => {
         // let currPlaylist = playlists?.filter((playlist) => playlist.id === id)
 
         let currPlaylist = await musicApi.get(`/artists/${id}/songs`);
@@ -57,7 +57,12 @@ export default function Home() {
             });
         }
         fetchData();
+
     }, [])
+
+    useEffect(() => {
+        console.log('open', open)
+    })
 
 
     return (
@@ -70,54 +75,60 @@ export default function Home() {
                     handleClickOpen={handleClickOpen}
                 />
             })}
-            <div
-                className="screen"
-                style={
-                    {
-                        position: "fixed",
-                        transform: "translate(-30px, 0)",
-                        zIndex: "900",
-                        maxWidth: "80%",
-                        width: 'inherit',
-                        minWidth: '-webkit-fill-available',
-                        bottom: 0,
-                        transition: ".3s height",
-                        height: open ? "100%" : 0,
-                        // display: open ? "" : "none",
-                    }
-                }
-            >
-                <AppBar sx={{ position: 'relative', backgroundColor: "black!important", color: "white" }}>
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleClose}
-                            aria-label="close"
-                        >
-                            <CloseIcon sx={{ fontSize: 20 }} />
-                        </IconButton>
-                        <Typography sx={{ ml: 1, flex: 1, fontSize: 15 }} variant="h6" component="div">
-                            {selectedPlaylist?.name || 'Playlist'}
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <div className="cover" style={{ backgroundColor: 'white', height: "100%" }}>
-                    {
-                        Object.keys(selectedPlaylist).length !== 0 ?
-                            <Player /> :
-                            <Box
-                                className='body'
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <CircularProgress sx={{ color: 'grey.50' }} />
-                            </Box>
-                    }
-                </div>
-            </div>
+            <Open open={open} handleClose={handleClose} selectedPlaylist={selectedPlaylist} />
         </section >
+    )
+}
+
+export function Open({open, handleClose, selectedPlaylist}) {
+    return (
+        <div
+            className="screen"
+            style={
+                {
+                    position: "fixed",
+                    transform: "translate(-30px, 0)",
+                    zIndex: "900",
+                    maxWidth: "80%",
+                    width: 'inherit',
+                    minWidth: '-webkit-fill-available',
+                    bottom: 0,
+                    transition: ".3s height",
+                    height: open ? "100%" : 0,
+                    // display: open ? "" : "none",
+                }
+            }
+        >
+            <AppBar sx={{ position: 'relative', backgroundColor: "black!important", color: "white" }}>
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        onClick={handleClose}
+                        aria-label="close"
+                    >
+                        <CloseIcon sx={{ fontSize: 20 }} />
+                    </IconButton>
+                    <Typography sx={{ ml: 1, flex: 1, fontSize: 15 }} variant="h6" component="div">
+                        {selectedPlaylist?.name || 'Playlist'}
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <div className="cover" style={{ backgroundColor: 'white', height: "100%" }}>
+                {
+                    Object.keys(selectedPlaylist).length !== 0 ?
+                        <Player /> :
+                        <Box
+                            className='body'
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}>
+                            <CircularProgress sx={{ color: 'grey.50' }} />
+                        </Box>
+                }
+            </div>
+        </div>
     )
 }

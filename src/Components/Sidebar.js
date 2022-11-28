@@ -75,7 +75,9 @@ function Sidebar() {
       <NavLink to="/library" activeClassName="active" style={{ textDecoration: 'none' }}>
         <SidebarOption Icon={LibraryMusicIcon} option="Your Library" />
       </NavLink>
-      <SidebarOption Icon={SearchIcon} option="Search" />
+      <NavLink to="/search" activeClassName="active" style={{ textDecoration: 'none' }}>
+        <SidebarOption Icon={SearchIcon} option="Search" />
+      </NavLink>
       <br />
       <strong className="sidebar__title">RECENT HEARD</strong>
       <hr />
@@ -93,7 +95,7 @@ function Sidebar() {
             onClick={() => { }} href="/login"
             variant="outlined" size="small"
             id="btn-sign"
-            style={{ color: lightBlue[50], borderColor: lightBlue[50] }}
+            style={{ color: lightBlue[50], borderColor: lightBlue[50], }}
           >SignIn</Button>
       }
     </div>

@@ -180,7 +180,7 @@ function Footer() {
             className="footer__albumLogo"
             // src={bgImage}
             src={item !== null ?
-              `http://127.0.0.1:4000/albums/${item.album.image}` :
+              `https://firebasestorage.googleapis.com/v0/b/musify-927d4.appspot.com/o/images%2F${item.album.image}?alt=media` :
               bgImage
             }
             alt={item?.name}

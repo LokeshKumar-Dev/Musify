@@ -54,7 +54,6 @@ export function SignInForm({ handleChangeFunc }) {
                         label="Email Address"
                         name="email_address"
                         autoComplete="email"
-                        autoFocus
                         onBlur={form.handleBlurEvent}
                         onChange={form.handleChangeEvent}
                         value={fields.email_address}
@@ -92,6 +91,7 @@ export function SignInForm({ handleChangeFunc }) {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
+                    style={{backgroundColor: '#0a385c'}}
                 >
                     Sign In
                 </Button>
@@ -237,6 +237,7 @@ export function SignUpForm() {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
+                    style={{backgroundColor: '#0a385c'}}
                 >
                     Create Account
                 </Button>
