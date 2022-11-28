@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/Musify/static/css/main.a46ea1a0.css",
+    "main.js": "/Musify/static/js/main.cfd280de.js",
+    "static/media/bg.jpg": "/Musify/static/media/bg.f368ebf7b771fb8fbf66.jpg",
+    "index.html": "/Musify/index.html",
+    "main.a46ea1a0.css.map": "/Musify/static/css/main.a46ea1a0.css.map",
+    "main.cfd280de.js.map": "/Musify/static/js/main.cfd280de.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a46ea1a0.css",
+    "static/js/main.cfd280de.js"
+  ]
+}
