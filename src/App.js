@@ -25,11 +25,12 @@ function App() {
             <>
               <Sidebar />
               <Routes>
-                <Route path='/' element={<Navigate to="/home" />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/home' element={<Home />} />
-                <Route path='/library' element={<Library />} />
-                <Route path='/search' element={<Search />} />
+                <Route path='/' element={<Navigate to="/Musify/home" />} />
+                <Route path='/Musify' element={<Navigate to="/Musify/home" />} />
+                <Route path='/Musify/login' element={<Login />} />
+                <Route path='/Musify/home' element={<Home />} />
+                <Route path='/Musify/library' element={<Library />} />
+                <Route path='/Musify/search' element={<Search />} />
               </Routes>
               <Footer />
             </>

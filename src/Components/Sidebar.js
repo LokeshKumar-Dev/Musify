@@ -69,13 +69,13 @@ function Sidebar() {
         src="https://music.musify.it/wp-content/uploads/2021/01/logo-musify-150.png"
         alt=""
       />
-      <NavLink to="/home" activeClassName="active" style={{ textDecoration: 'none' }}>
+      <NavLink to="/Musify/home" activeClassName="active" style={{ textDecoration: 'none' }}>
         <SidebarOption Icon={HomeIcon} option="Home" />
       </NavLink>
-      <NavLink to="/library" activeClassName="active" style={{ textDecoration: 'none' }}>
+      <NavLink to="/Musify/library" activeClassName="active" style={{ textDecoration: 'none' }}>
         <SidebarOption Icon={LibraryMusicIcon} option="Your Library" />
       </NavLink>
-      <NavLink to="/search" activeClassName="active" style={{ textDecoration: 'none' }}>
+      <NavLink to="/Musify/search" activeClassName="active" style={{ textDecoration: 'none' }}>
         <SidebarOption Icon={SearchIcon} option="Search" />
       </NavLink>
       <br />
