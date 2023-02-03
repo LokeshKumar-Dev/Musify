@@ -8,7 +8,10 @@ export const initialState = {
   //   ],
   // },
 
-  user: {},
+  user: {
+    token: '',
+    data: {}
+  },
 
   selectedPlaylist: {},
   playingPlaylist: [],
@@ -1000,6 +1003,7 @@ const reducer = (state, action) => {
       };
 
     case "SET_USER":
+      console.log('state', state)
       return {
         ...state,
         user: action.user,

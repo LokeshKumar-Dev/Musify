@@ -19,23 +19,20 @@ function App() {
   return (
     <div className="app">
       <Router>
-        {
-          Object.values(user).length !== 0 ?
-            <Login /> :
-            <>
-              <Sidebar />
-              <Routes>
-                <Route path='/' element={<Navigate to="/Musify/home" />} />
-                <Route path='/Musify' element={<Navigate to="/Musify/home" />} />
-                <Route path='/Musify/login' element={<Login />} />
-                <Route path='/Musify/home' element={<Home />} />
-                <Route path='/Musify/library' element={<Library />} />
-                <Route path='/Musify/search' element={<Search />} />
-              </Routes>
-              <Footer />
-            </>
-        }
-
+        <Sidebar />
+        <Routes>
+          {
+            user.token === '' ?
+              <Route path='/' element={<Navigate to="/login" />} /> :
+              <Route path='/' element={<Navigate to="/Musify" />} />
+          }
+          <Route path='/Musify' element={<Home />} />
+          {/* <Route path='/Musify' element={<Navigate to="/Musify/home" />} /> */}
+          <Route path='/login' element={<Login />} />
+          <Route path='/library' element={<Library />} />
+          <Route path='/search' element={<Search />} />
+        </Routes>
+        <Footer />
       </Router>
     </div>
   );

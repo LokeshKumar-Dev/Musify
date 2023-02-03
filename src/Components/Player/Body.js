@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Body.css";
 
 import bgImage from '../../media/bg.jpg'
@@ -6,8 +6,8 @@ import bgImage from '../../media/bg.jpg'
 import { useStateValue } from "../../reducer/StateProvider";
 import SongRow from "./SongRow";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+// import FavoriteIcon from "@material-ui/icons/Favorite";
+// import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const cleanUpFunction = (audio, dispatch) => {
   audio.pause();
@@ -19,14 +19,14 @@ const cleanUpFunction = (audio, dispatch) => {
 
 export const playSongBody = async (track, audio, volume = .30, dispatch) => {
   if (audio !== null) cleanUpFunction(audio, dispatch);
-  console.log(track)
+
   if (track) {
-    // const curAudio = new Audio(`http://127.0.0.1:4000/songs/${track.file}`);
+    // const curAudio = new Audio(`http://127.0.0.1:4000/songs/file/${track.file}`);
     const curAudio = new Audio(`https://firebasestorage.googleapis.com/v0/b/musify-927d4.appspot.com/o/songs%2F${track.file}?alt=media`);
     curAudio.volume = volume;
 
     curAudio.onplaying = () => {
-      console.log('STARTED')
+      console.log('STARTED');
       dispatch({
         type: 'SET_PLAYING',
         playing: true,
@@ -64,7 +64,7 @@ export const playPlayList = (listId, songId = '1', playlists = [], audio, volume
 }
 
 function Body() {
-  const [{ playlists, selectedPlaylist, audio, volume }, dispatch] = useStateValue();
+  const [{ selectedPlaylist, audio, volume }, dispatch] = useStateValue();
 
   return (
     <div className="body">

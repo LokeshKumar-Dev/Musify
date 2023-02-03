@@ -28,7 +28,7 @@ export default function SongsPlaylist({ playlist, title, handleClickOpen }) {
         setPage(rows)
     }, [albumWidth])
 
-    function distributeItems(items, id, albumWidth, isPlaylist, pId) {
+    function distributeItems(items, id, albumWidth, isPlaylist, pId, isAlbum) {
         return <div key={id} className="carousel__pair">
             {items.map((item) => {
                 return <SongCards
@@ -36,7 +36,9 @@ export default function SongsPlaylist({ playlist, title, handleClickOpen }) {
                     pId={pId}
                     albumWidth={albumWidth}
                     isPlaylist={isPlaylist}
+                    isAlbum={isAlbum}
                     handleClickOpen={handleClickOpen}
+                    searchPlaylist={playlist}
                 />
             })}
         </div>
@@ -57,7 +59,7 @@ export default function SongsPlaylist({ playlist, title, handleClickOpen }) {
             >
                 {
                     page.map((x, i) => {
-                        return distributeItems(playlist?.tracks.items.slice(x, x + count[1]), i, albumWidth, playlist?.isPlaylist, playlist?.id)
+                        return distributeItems(playlist?.tracks.items.slice(x, x + count[1]), i, albumWidth, playlist?.isPlaylist, playlist?.id, playlist?.isAlbum)
                     })
                 }
             </Carousel>

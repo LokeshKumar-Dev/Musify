@@ -15,9 +15,11 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/West';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import Button from "@material-ui/core/Button";
+import { lightBlue } from "@material-ui/core/colors";
 
 export default function Home() {
-    const [{ playlists, selectedPlaylist, open }, dispatch] = useStateValue();
+    const [{ user, playlists, selectedPlaylist, open }, dispatch] = useStateValue();
 
     const handleClickOpen = async (id, name) => {
         // let currPlaylist = playlists?.filter((playlist) => playlist.id === id)
@@ -45,13 +47,21 @@ export default function Home() {
 
     useEffect(() => {
         async function fetchData() {
+            var res;
+
             // You can await here
-            const res = await musicApi.get('/songs/feed')
+            if (Object.keys(user.data).length === 0) {
+                res = await musicApi.get('/songs/demo');
+            } else {
+                res = await musicApi.get('/songs/feed', { headers: { Authorization: `Bearer ${user.token}` } });
+            }
+
             // ...
+            console.log('res', res);
             if (res.status !== 200) {
                 return console.log('Sorrryy')
             }
-            dispatch({
+            return dispatch({
                 type: 'SET_PLAYLIST',
                 playlist: res.data,
             });
@@ -61,26 +71,52 @@ export default function Home() {
     }, [])
 
     useEffect(() => {
-        console.log('open', open)
+        console.log('playlists', playlists)
     })
-
 
     return (
         <section className="body">
             <Header />
-            {playlists?.map((playlist) => {
-                return <SongsPlaylist
-                    playlist={playlist}
-                    title={playlist.name || 'Playlist'}
-                    handleClickOpen={handleClickOpen}
-                />
-            })}
+            {
+                Object.keys(user.data).length === 0 ?
+                    <>
+                        {
+                            playlists.length !== 0 ?
+                                <SongsPlaylist
+                                    playlist={playlists[0]}
+                                    title={playlists[0].name || 'Playlist'}
+                                    handleClickOpen={handleClickOpen}
+                                /> :
+                                null
+                        }
+
+                        <div className="btn-box">
+                            <h1>
+                                Wanted to Access More?
+                            </h1>
+                            <Button
+                                onClick={() => { }} href="/login"
+                                variant="outlined" size="small"
+                                id="btn-sign"
+                                style={{ color: lightBlue[50], borderColor: lightBlue[50], }}
+                            >SignUp</Button>
+                        </div>
+
+                    </> :
+                    playlists?.map((playlist) => {
+                        return <SongsPlaylist
+                            playlist={playlist}
+                            title={playlist.name || 'Playlist'}
+                            handleClickOpen={handleClickOpen}
+                        />
+                    })
+            }
             <Open open={open} handleClose={handleClose} selectedPlaylist={selectedPlaylist} />
         </section >
     )
 }
 
-export function Open({open, handleClose, selectedPlaylist}) {
+export function Open({ open, handleClose, selectedPlaylist }) {
     return (
         <div
             className="screen"
@@ -99,6 +135,7 @@ export function Open({open, handleClose, selectedPlaylist}) {
                 }
             }
         >
+
             <AppBar sx={{ position: 'relative', backgroundColor: "black!important", color: "white" }}>
                 <Toolbar>
                     <IconButton

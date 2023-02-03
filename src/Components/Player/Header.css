@@ -22,6 +22,7 @@
   padding: 10px;
   border-radius: 30px;
   color: gray;
+  cursor: pointer;
   align-items: center;
 }
 
@@ -29,6 +30,7 @@
   border: none;
   width: 100%;
   outline: none!important;
+  cursor: pointer;
 }
 
 .header__right > h4 {

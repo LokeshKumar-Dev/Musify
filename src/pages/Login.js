@@ -45,14 +45,11 @@ function a11yProps(index) {
 }
 
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(event, newValue)
+    // console.log(event, newValue)
   };
 
   return (
@@ -68,7 +65,7 @@ export default function Login() {
           <SignInForm handleChangeFunc={handleChange}/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <SignUpForm/>
+          <SignUpForm />
         </TabPanel>
       </Paper>
     </section>

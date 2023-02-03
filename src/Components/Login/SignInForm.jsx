@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from "react-router-dom";
 import { Lang, useFormInputValidation } from "react-form-input-validation";
 
+import musicApi from '../../api/musicApi';
+import { useStateValue } from "../../reducer/StateProvider";
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -10,6 +12,12 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 export function SignInForm({ handleChangeFunc }) {
     const [fields, errors, form] = useFormInputValidation(
@@ -19,22 +27,53 @@ export function SignInForm({ handleChangeFunc }) {
         },
         {
             email_address: "required|email",
-            password: ["required", "regex:/^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,16}$/"],
+            password: ["required"],
         }
     );
+    const [{ }, dispatch] = useStateValue();
+    const navigate = useNavigate();
+
+    //Local Variable
+    const [alert, setAlert] = useState(0);
+    const [msg, setMsg] = useState(['error', 'Internal Server Error. Try Again!']);
 
     form.useLang(Lang.en);
 
-    useEffect(() => {
-        if (form.isValidForm) {
-            console.log("MAKE AN API CALL ==> useEffect", fields, errors, form);
-        }
-    }, []);
-
     const handleSubmit = async (event) => {
-        event.preventDefault()
-        console.log(event)
-        console.log("MAKE AN API CALL", fields, errors);
+        event.preventDefault();
+
+        //Check Inputs are correct
+        if ((fields.email_address === '' || fields.password === '') || Object.keys(errors).length !== 0) {
+            return console.log("DON'T make API", fields, errors, form);
+        }
+
+        //Make api call atlast
+        musicApi.post(`/user/login`, {
+            email: fields.email_address,
+            password: fields.password,
+        })
+            .then(async (res) => {
+                setMsg(['success', 'Successfully logged in!']);
+                setAlert(1);
+
+                dispatch({
+                    type: "SET_USER",
+                    user: {
+                        token: res.data.token,
+                        data: res.data.user,
+                    }
+                });
+                await sleep(1000);
+
+                return navigate('/');
+            })
+            .catch((err) => {
+                if (err.response.status > 450) {
+                    setMsg(['error', 'Email or Password are incorrect!']);
+                    return setAlert(1);
+                }
+                return setAlert(1);
+            });
     };
     return (
         <>
@@ -91,7 +130,7 @@ export function SignInForm({ handleChangeFunc }) {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
-                    style={{backgroundColor: '#0a385c'}}
+                    style={{ backgroundColor: '#0a385c' }}
                 >
                     Sign In
                 </Button>
@@ -108,14 +147,21 @@ export function SignInForm({ handleChangeFunc }) {
                     </Link>
                 </Grid>
             </Grid>
+            <Snackbar open={alert} autoHideDuration={2000} onClose={() => setAlert(0)}
+                style={{
+                    "left": "50%",
+                    "transform": "translateX(-50%)"
+                }}
+            >
+                <Alert onClose={() => setAlert(0)} severity={msg[0]} sx={{ width: '100%' }}>
+                    {msg[1]}
+                </Alert>
+            </Snackbar>
         </>
     )
 }
 
 export function SignUpForm() {
-    const [passwordC, setPasswordC] = useState('')
-    const [username, setUsername] = useState('')
-
     const [fields, errors, form] = useFormInputValidation(
         {
             username: "",
@@ -124,35 +170,59 @@ export function SignUpForm() {
             password_confirmation: "",
         },
         {
-            username: "required|min:5|max:16",
+            username: ["required", 'regex:/^.{4,20}$/'],
             email_address: "required|email",
-            password: ["required", "regex:/^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,16}$/"],
+            password: ["required", 'regex:/^.{8,20}$/'],
             password_confirmation: "required|same:password",
         }
     );
 
-    useEffect(() => {
-        form.registerAsync("username_available", function (
-            username,
-            attribute,
-            req,
-            passes
-        ) {
-            setTimeout(() => {
-                if (username === "fooled")
-                    passes(false, "Username has already been taken.");
-                // if username is not available
-                else passes();
-            }, 1000);
-        });
-    }, []);
+    const [{ }, dispatch] = useStateValue();
+    const [msg, setMsg] = useState(['error', 'Internal Server Error. Try Again!']);
+    const [alert, setAlert] = useState(0);
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         const isValid = await form.validate(event);
-        console.log("Event", event, isValid);
-        if (isValid) {
-            console.log("MAKE AN API CALL", fields, errors);
+
+        //Check Inputs are correct
+        if (!isValid || Object.keys(errors).length !== 0) {
+            setMsg(['error', 'Check values correctly!']);
+            return setAlert(1);
         }
+
+        //Make api call atlast
+        musicApi.post(`/user/signup`, {
+            name: fields.username,
+            email: fields.email_address,
+            password: fields.password,
+            passwordConfirm: fields.password_confirmation,
+        })
+            .then(async (res) => {
+                setMsg(['success', 'Successfully signed up!, Now Login']);
+                setAlert(1);
+                dispatch({
+                    type: "SET_USER",
+                    user: {
+                        token: res.data.token,
+                        data: res.data.user,
+                    }
+                });
+                await sleep(1000);
+
+                return navigate('/');
+            })
+            .catch((err) => {
+                const status = err.response.status;
+                if (status > 450 && status < 500) {
+                    setMsg(['error', 'Email are already exist!']);
+                }
+                else if (status > 500) {
+                    setMsg(['error', 'Internal Server Error, Please Try Later!']);
+                }
+                setMsg(['error', 'Internal Server Error, Please Try Later!']);
+                return setAlert(1);
+            });
     };
     return (
         <>
@@ -209,7 +279,7 @@ export function SignUpForm() {
                         onChange={form.handleChangeEvent}
                         value={fields.password}
                     />
-                    <span className="input_info">Note: atleast 1 Digit, 1 UpperCase, 8 Character Long</span>
+                    <span className="input_info">Note: 8 Character Long</span>
                     <label className="error">
                         {errors.password ? errors.password : ""}
                     </label>
@@ -237,11 +307,21 @@ export function SignUpForm() {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
-                    style={{backgroundColor: '#0a385c'}}
+                    style={{ backgroundColor: '#0a385c' }}
                 >
                     Create Account
                 </Button>
             </Box>
+            <Snackbar open={alert} autoHideDuration={2000} onClose={() => setAlert(0)}
+                style={{
+                    "left": "50%",
+                    "transform": "translateX(-50%)"
+                }}
+            >
+                <Alert onClose={() => setAlert(0)} severity={msg[0]} sx={{ width: '100%' }}>
+                    {msg[1]}
+                </Alert>
+            </Snackbar>
         </>
     )
 }

@@ -46,7 +46,6 @@ function Footer() {
     // if (isPlaylist) { return }
 
     const run = setInterval(() => { if (playing) setSeconds(s => s + 1) }, 1000);//CREATE Interval TIMER
-
     // console.log(repeat)
 
 
@@ -110,7 +109,6 @@ function Footer() {
     let index1 = playingPlaylist.findIndex(x => x.id === index);
     let count = playingPlaylist.length;
 
-    console.log(playingPlaylist, index1)
     if (index1 + 1 >= count) { return playSongBody(playingPlaylist[0], audio, volume, dispatch) }
 
     // if (shuffle && !repeat[0] && !repeat[1]) {
@@ -176,15 +174,19 @@ function Footer() {
           </Grid>
         </div>
         <div className="footer__left">
-          <img
-            className="footer__albumLogo"
-            // src={bgImage}
-            src={item !== null ?
-              `https://firebasestorage.googleapis.com/v0/b/musify-927d4.appspot.com/o/images%2F${item.album.image}?alt=media` :
-              bgImage
-            }
-            alt={item?.name}
-          />
+          <div className="footer__albumLogo" style={{ position: 'relative' }}>
+            <img
+              className="footer__albumLogo"
+              // src={bgImage}
+              style={{ position: 'absolute' }}
+              src={item !== null ?
+                `https://firebasestorage.googleapis.com/v0/b/musify-927d4.appspot.com/o/images%2F${item.album.image}?alt=media` :
+                bgImage
+              }
+              alt={item?.name}
+            />
+          </div>
+
           {
             item ?
               <div className="footer__songInfo">

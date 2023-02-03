@@ -37,28 +37,6 @@ function Sidebar() {
           }
         ],
       },
-      {
-        "name": "Mayakaama Kalakaama",
-        "path": "https://cdn10.solamutha.xyz/download/oN14FXatZxIbbBfABY8D4w/1666730809/t/2022/Thiruchitrambalam/128/Mayakkama-Kalakkama-MassTamilan.dev.mp3",
-        "id": "1231241",
-        "duration": "2:22",
-        "album": {
-          "name": "Thiruchitrampazham",
-        },
-        "artists": [
-          {
-            "genres": [
-              "Prog rock",
-              "Grunge"
-            ],
-            "href": "string",
-            "id": "12421",
-            "name": "U1",
-            "popularity": 0,
-            "type": "artist",
-          }
-        ],
-      },
     ]
   }
 
@@ -69,20 +47,20 @@ function Sidebar() {
         src="https://music.musify.it/wp-content/uploads/2021/01/logo-musify-150.png"
         alt=""
       />
-      <NavLink to="/Musify/home" activeClassName="active" style={{ textDecoration: 'none' }}>
+      <NavLink to="/Musify" activeClassName="active" style={{ textDecoration: 'none' }}>
         <SidebarOption Icon={HomeIcon} option="Home" />
       </NavLink>
-      <NavLink to="/Musify/library" activeClassName="active" style={{ textDecoration: 'none' }}>
+      <NavLink to="/library" activeClassName="active" style={{ textDecoration: 'none' }}>
         <SidebarOption Icon={LibraryMusicIcon} option="Your Library" />
       </NavLink>
-      <NavLink to="/Musify/search" activeClassName="active" style={{ textDecoration: 'none' }}>
+      <NavLink to="/search" activeClassName="active" style={{ textDecoration: 'none' }}>
         <SidebarOption Icon={SearchIcon} option="Search" />
       </NavLink>
       <br />
       <strong className="sidebar__title">RECENT HEARD</strong>
       <hr />
       {
-        Object.keys(user).length >= 1 ?
+        Object.keys(user.data).length >= 1 ?
           playlists?.items?.map((item, i) => (
             <SongRow
               key={i}

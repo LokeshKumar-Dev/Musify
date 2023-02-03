@@ -13,7 +13,7 @@ import ListOutlinedIcon from "@material-ui/icons/ListOutlined";
 
 import LazyLoad from 'react-lazy-load';
 
-export default function SongCards({ track, pId, albumWidth, isPlaylist, handleClickOpen }) {
+export default function SongCards({ track, pId, albumWidth, isPlaylist, isAlbum, handleClickOpen, searchPlaylist = [] }) {
     const [{ playlists, volume, audio }, dispatch] = useStateValue();
 
     //Convert 1000 to 1k, m, b
@@ -28,9 +28,18 @@ export default function SongCards({ track, pId, albumWidth, isPlaylist, handleCl
         <Card className='album' key={track.id} elevation={0} style={{ maxHeight: `${albumWidth || 200}px`, maxWidth: `${albumWidth || 200}px` }}>
 
             <CardActionArea onClick={() => {
-                if (!isPlaylist) return playPlayList(pId, track.id, playlists, audio, volume, dispatch);
+                if (searchPlaylist.length !== 0 && !isPlaylist) {
+                    dispatch({
+                        "type": "SET_REPEAT",
+                        "repeat": [true, false],
+                    })
+                    return playSongBody(track, audio, volume, dispatch)
+                };
 
-                return handleClickOpen(track.id)
+                if (!isPlaylist) return playPlayList(pId, track.id, playlists, audio, volume);
+
+                console.log('first', isPlaylist, isAlbum)
+                return handleClickOpen(track.id, isAlbum)
             }}>
                 <CardContent>
                     <LazyLoad width={albumWidth || 200} threshold={0.95} onContentVisible={() => { console.log('loaded!') }}>
